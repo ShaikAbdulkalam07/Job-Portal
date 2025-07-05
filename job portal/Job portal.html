@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Job Portal UX Research & Design</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #ffffff;
+    color: #374151; /* neutral gray */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: #2563eb; /* blue 600 */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover,
+  a:focus {
+    color: #1d4ed8; /* blue 700 */
+    outline: none;
+  }
+  h1, h2, h3, h4 {
+    color: #111827; /* gray-900 */
+    margin: 0;
+  }
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+  }
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 32px;
+  }
+  /* Section spacing */
+  section {
+    padding: 64px 0;
+  }
+  /* Persona cards */
+  .personas {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .persona-card {
+    background: rgba(255 255 255 / 0.8);
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    padding: 32px;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .persona-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .persona-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .persona-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+  .persona-role {
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 16px;
+  }
+  .persona-details {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 20px;
+  }
+  .persona-points {
+    text-align: left;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+  .persona-points li {
+    margin-bottom: 6px;
+  }
+  
+  /* Wireframes container */
+  .wireframes {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    justify-items: center;
+  }
+  .wireframe-card {
+    background: #f3f4f6;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    width: 360px;
+    padding: 24px;
+    font-family: monospace, monospace;
+    color: #374151;
+    user-select: none;
+  }
+  .wireframe-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 8px;
+    text-align: center;
+  }
+  /* Wireframe boxes */
+  .wireframe-box {
+    background: #ffffff;
+    border: 2px dashed #9ca3af;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+  }
+  .wireframe-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .wireframe-input,
+  .wireframe-button {
+    background: #e5e7eb;
+    border-radius: 6px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .wireframe-button {
+    background: #93c5fd;
+    color: #1e40af;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  .wireframe-button:hover,
+  .wireframe-button:focus {
+    background: #3b82f6;
+    color: white;
+    outline: none;
+  }
+  
+  /* Mockups container */
+  .mockups {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    align-items: start;
+  }
+  .mockup-card {
+    background: rgba(255 255 255 / 0.8);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    backdrop-filter: blur(24px);
+    padding: 24px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  .mockup-header {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #e0e7ff;
+    padding-bottom: 8px;
+    color: #1e293b;
+  }
+  /* Job Listing Card */
+  .job-listing-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .job-listing-card:hover,
+  .job-listing-card:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+    outline: none;
+  }
+  .job-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+    color: #1e293b;
+  }
+  .job-company {
+    font-weight: 600;
+    color: #2563eb; /* blue 600 */
+    margin-bottom: 4px;
+  }
+  .job-location {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 8px;
+  }
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .job-tag {
+    background: #e0e7ff;
+    color: #3b82f6;
+    border-radius: 12px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    user-select: none;
+  }
+  /* Job Details */
+  .job-details {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    user-select: none;
+  }
+  .job-details h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #111827;
+  }
+  .job-details p {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #4b5563;
+  }
+  .apply-btn {
+    background: #2563eb;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    align-self: flex-start;
+  }
+  .apply-btn:hover,
+  .apply-btn:focus {
+    background: #1d4ed8;
+    outline: none;
+  }
+  /* Interview scheduling card */
+  .interview-schedule {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+    max-width: 400px;
+    user-select: none;
+  }
+  .interview-schedule h4 {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1e293b;
+  }
+  .interview-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  .interview-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #4b5563;
+  }
+  .interview-input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #d1d5db;
+    font-size: 1rem;
+    color: #374151;
+    transition: border-color 0.3s ease;
+  }
+  .interview-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
+  }
+  .schedule-btn {
+    background: #2563eb;
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .schedule-btn:hover,
+  .schedule-btn:focus {
+    background: #1d4ed8;
+    outline: none;
+  }
+  /* Pain points */
+  .pain-points {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .pain-points h2 {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .pain-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .pain-item {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 20px 28px;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(212, 180, 74, 0.3);
+    font-weight: 600;
+  }
+  /* Responsive */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2.75rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <header class="container" style="padding: 24px 0; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; background: white; z-index: 10;">
+    <h1>Job Portal UX Research & Design</h1>
+  </header>
+  
+  <main class="container" role="main">
+    <!-- Personas -->
+    <section aria-labelledby="personas-title">
+      <h2 id="personas-title" style="text-align:center; margin-bottom: 48px;">User Personas: Job Seeker & Recruiter</h2>
+      <div class="personas">
+        <article class="persona-card" aria-label="Persona: Job Seeker - Fresh graduate">
+          <div class="persona-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/67c2b020-4a82-42d2-93a5-a72bc7d70e84.png" alt="Portrait of a fresh graduate job seeker with casual attire" />
+          </div>
+          <div class="persona-name">Ameer Khan</div>
+          <div class="persona-role">Job Seeker (Fresh Graduate)</div>
+          <p class="persona-details">Recent college graduate searching for entry-level roles in software engineering with limited experience.</p>
+          <ul class="persona-points">
+            <li>Wants easy job search & clear application steps</li>
+            <li>Needs resume upload & portfolio showcase</li>
+            <li>Seeks timely feedback & status updates</li>
+            <li>Feels overwhelmed by complex forms</li>
+          </ul>
+        </article>
+        <article class="persona-card" aria-label="Persona: Recruiter - HR professional">
+          <div class="persona-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/de0880e3-ff7f-41eb-9ec0-8437d59638f1.png" alt="Portrait of recruiter, an HR professional, in business attire" />
+          </div>
+          <div class="persona-name">Michael Lee</div>
+          <div class="persona-role">Recruiter (HR Professional)</div>
+          <p class="persona-details">Experienced HR professional focused on hiring fresh talent with fast, efficient screening and scheduling.</p>
+          <ul class="persona-points">
+            <li>Needs intuitive job posting & applicant tracking</li>
+            <li>Wants automated resume management</li>
+            <li>Seeks easy interview scheduling integration</li>
+            <li>Frustrated by poor candidate filtering options</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Wireframes -->
+    <section aria-labelledby="wireframes-title">
+      <h2 id="wireframes-title" style="margin-bottom: 48px; text-align:center;">Wireframes: Job Search, Apply & Resume Upload</h2>
+      <div class="wireframes" role="list">
+        
+        <section class="wireframe-card" role="listitem" aria-label="Job Search wireframe">
+          <h3 class="wireframe-title">Job Search</h3>
+          <div class="wireframe-box">
+            <label class="wireframe-label">Search Keywords</label>
+            <div class="wireframe-input" tabindex="0" aria-label="Search keywords input">[Enter job title, skills...]</div>
+          </div>
+          <div class="wireframe-box">
+            <label class="wireframe-label">Location</label>
+            <div class="wireframe-input" tabindex="0" aria-label="Location input">[City, state, or remote]</div>
+          </div>
+          <div class="wireframe-box">
+            <label class="wireframe-label">Filter by</label>
+            <div class="wireframe-input" tabindex="0" aria-label="Filter options">[Full-time, Part-time, Internship]</div>
+          </div>
+          <div class="wireframe-box wireframe-button" role="button" tabindex="0" aria-pressed="false" aria-label="Search jobs button">
+            Search Jobs
+          </div>
+        </section>
+        
+        <section class="wireframe-card" role="listitem" aria-label="Apply wireframe">
+          <h3 class="wireframe-title">Apply</h3>
+          <div class="wireframe-box">
+            <label class="wireframe-label">Job Title</label>
+            <div class="wireframe-input" tabindex="0" aria-label="Selected job title">[Software Engineer Intern]</div>
+          </div>
+          <div class="wireframe-box">
+            <label class="wireframe-label">Cover Letter</label>
+            <div class="wireframe-input" tabindex="0" aria-label="Cover letter text area" style="height: 80px;">[Write your cover letter here...]</div>
+          </div>
+          <div class="wireframe-box wireframe-button" role="button" tabindex="0" aria-pressed="false" aria-label="Submit application button">
+            Submit Application
+          </div>
+        </section>
+
+        <section class="wireframe-card" role="listitem" aria-label="Resume Upload wireframe">
+          <h3 class="wireframe-title">Resume Upload</h3>
+          <div class="wireframe-box wireframe-button" role="button" tabindex="0" aria-pressed="false" aria-label="Upload resume button">
+            Upload Resume (PDF, DOCX)
+          </div>
+          <p style="color:#6b7280; font-size: 0.875rem; margin-top: 8px;">Supported formats: PDF, DOCX. Max size: 5MB</p>
+          <div class="wireframe-box" style="background:#e0e7ff; color:#1e40af; font-weight:600; text-align:center;">
+            No resume uploaded
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Mockups -->
+    <section aria-labelledby="mockups-title">
+      <h2 id="mockups-title" style="margin-bottom: 48px; text-align:center;">Mockups: Job Listing & Job Details</h2>
+      <div class="mockups">
+        <section class="mockup-card" aria-label="Job listing mockup">
+          <h3 class="mockup-header">Job Listing</h3>
+          <article class="job-listing-card" tabindex="0" role="article" aria-label="Job listing for Junior Frontend Developer at BrightTech">
+            <div class="job-title">Junior Frontend Developer</div>
+            <div class="job-company">BrightTech Solutions</div>
+            <div class="job-location">Remote</div>
+            <div class="job-tags" aria-label="Job tags">
+              <span class="job-tag" aria-label="Full-time job">Full-time</span>
+              <span class="job-tag" aria-label="Entry level position">Entry Level</span>
+              <span class="job-tag" aria-label="Written communication skill"><span class="material-icons" style="vertical-align:middle; font-size: 16px;">edit</span> Communication</span>
+            </div>
+          </article>
+          <article class="job-listing-card" tabindex="0" role="article" aria-label="Job listing for Marketing Intern at Nova Media">
+            <div class="job-title">Marketing Intern</div>
+            <div class="job-company">Nova Media</div>
+            <div class="job-location">New York, NY</div>
+            <div class="job-tags" aria-label="Job tags">
+              <span class="job-tag" aria-label="Internship">Internship</span>
+              <span class="job-tag" aria-label="Part-time job">Part-time</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="mockup-card job-details" aria-label="Job details mockup">
+          <h3 class="mockup-header">Job Details</h3>
+          <h3>Junior Frontend Developer</h3>
+          <p><strong>Company:</strong> BrightTech Solutions</p>
+          <p><strong>Location:</strong> Remote</p>
+          <p><strong>Description:</strong> Join our dynamic team as a Junior Frontend Developer focused on building accessible and responsive web apps using modern JavaScript frameworks.</p>
+          <p><strong>Requirements:</strong></p>
+          <ul style="color:#4b5563; margin-top:0; margin-bottom:1.5rem; padding-left: 18px;">
+            <li>Basic knowledge of HTML, CSS, JavaScript</li>
+            <li>Familiarity with React or similar frameworks</li>
+            <li>Good communication skills</li>
+          </ul>
+          <button class="apply-btn" aria-label="Apply to Junior Frontend Developer job">Apply Now</button>
+        </section>
+      </div>
+    </section>
+
+    <!-- Pain Points -->
+    <section aria-labelledby="painpoints-title" class="pain-points">
+      <h2 id="painpoints-title">Pain Points Solved Via Our Design</h2>
+      <ul class="pain-list">
+        <li class="pain-item" tabindex="0" aria-label="Pain point: Simplified job search with clear filters reduces overwhelm for job seekers">Complex job searches simplified through clear filters and keyword input</li>
+        <li class="pain-item" tabindex="0" aria-label="Pain point: Easy resume upload and application steps minimizes confusion and friction">Easy, clear resume upload feature with support info to reduce applicant confusion</li>
+        <li class="pain-item" tabindex="0" aria-label="Pain point: Real-time application status updates improve user confidence">Real-time feedback and application status updates to keep job seekers informed</li>
+        <li class="pain-item" tabindex="0" aria-label="Pain point: Intuitive job posting and candidate filtering helps recruiters save time">Recruiters benefit from intuitive job posting UI and enhanced candidate filtering</li>
+        <li class="pain-item" tabindex="0" aria-label="Pain point: Integrated interview scheduling simplifies coordination for recruiters and candidates">Integrated interview scheduling interface saves time by coordinating seamlessly</li>
+      </ul>
+    </section>
+
+    <!-- Optional Interview Scheduling UI -->
+    <section aria-labelledby="interview-title" style="padding-bottom:96px;">
+      <h2 id="interview-title" style="text-align:center; margin-bottom: 48px;">Interview Scheduling UI (Optional)</h2>
+      <div class="interview-schedule" role="form" aria-label="Interview Scheduling Form">
+        <h4>Schedule Interview</h4>
+        <div class="interview-field">
+          <label class="interview-label" for="candidate-name">Candidate Name</label>
+          <input class="interview-input" type="text" id="candidate-name" name="candidate-name" autocomplete="off" aria-required="true" />
+        </div>
+        <div class="interview-field">
+          <label class="interview-label" for="interview-date">Interview Date</label>
+          <input class="interview-input" type="date" id="interview-date" name="interview-date" aria-required="true" />
+        </div>
+        <div class="interview-field">
+          <label class="interview-label" for="interview-time">Interview Time</label>
+          <input class="interview-input" type="time" id="interview-time" name="interview-time" aria-required="true" />
+        </div>
+        <button class="schedule-btn" type="submit" aria-label="Schedule interview">Schedule</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
